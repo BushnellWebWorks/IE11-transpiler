@@ -1,20 +1,30 @@
-This tool watches ES6+ javascript files in the SuiteBee plugins directory (platform/wp-content/plugins), and transpiles them to IE11 compatible files.
+# IE11 Transpiler
 
-## Usage:
-+ ES6 files must be named with extension '.es6.js'
-+ Compatible files will be created/modified alongside the original, with extension '.ie-compat.js'
-+ For example: assets/js/foo.es6.js gains a new file assets/js/foo.ie-compat.js
-+ *Important:* Transpiled scripts don't run in the global scope. So variables considered "global" must be referenced as properties of _window_. For example:
-`var foo = foo || {}` // _outside references to foo won't work_
-`var foo = window.foo = foo || {}` // _adds foo to the "global" space_
-+ *Note:* unfortunately, webpack --watch doesn't recognize newly-added files. After creating a new .es6.js file, cancel and start again.
-+ *Also:* a dummy file named \_polyfill will appear in this directory, which can be ignored.
-+ *Note:* window.fetch is not a babel feature (it's a browser spec, not a JS spec). So it must be polyfilled, e.g.:
-`    if ( 'undefined' == typeof window.fetch ) {
+Quick webpack widget that watches & transpiles ES6+ to IE11 compatible JavaScript.
+
+### Description
+
+It's 2019, and somehow IE11 is still alive! If your project needs to reach the widest possible audience, including your grandma, then you'll need this tool or something like it.
+
+Go ahead and write your modern JS, and name your script files so they end in `.es6.js`. IE11 Transpiler will maintain a doppelganger of the same name, ending in `.ie-compat.js`.
+
+A few considerations:
+
++ **Important:** Transpiled scripts don't run in the global scope, so variables considered "global" must be referenced as properties of _window_. For example:
+
+`let foo = foo || {}` // _outside references to `foo` won't work_.
+
+`let foo = window.foo = foo || {}` // _adds `foo` to the "global" scope_.
+
++ **Note:** Unfortunately this watcher doesn't recognize newly-added files. After creating a new .es6.js file, cancel and start again.
+
++ **Also note:** `window.fetch` isn't a babel feature (it's a browser spec, not a JS function), so it must be polyfilled, e.g.:
+<pre>
+    if ( 'undefined' == typeof window.fetch ) {
       let wf = document.createElement('script');
-      wf.src = 'https://d17vd6x9ly0b0q.cloudfront.net/assets/any/polyfills/fetch.umd.js';
+      wf.src = 'path/to/hosted/fetch.umd.js';
       document.body.appendChild( wf );
     }
-`
+</pre>
 
-Uses webpack & babel. After installing modules (yarn preferred -- if npm then remove the yarn.lock file), type `yarn start` to begin watching.
++ A quick & dirty way to check for IE11 is to check the user agent (navigator.userAgent) for instances of 'trident' or 'msie'. Some ES6-compliant browsers may also match, but the worst case is they'll use the transpiled script versions instead of the modern ones. 

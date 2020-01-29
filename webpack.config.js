@@ -17,10 +17,10 @@ module.exports = env => {
   ]
   return {
     entry: entryPlus( entryReg ),
-    mode:'development',
+    mode:'production',
     output: {
-      path: watchPath, // path.resolve( __dirname, "../../platform/wp-content/plugins/"),
-      publicPath: watchPath, //'../../platform/wp-content/plugins/',
+      path: watchPath,
+      publicPath: watchPath,
       filename: '[name]',
     },
     resolve: {

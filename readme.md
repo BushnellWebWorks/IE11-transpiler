@@ -8,6 +8,13 @@ It's 2019, and somehow IE11 is still alive! If your project needs to reach the w
 
 Go ahead and write your modern JS, and name your script files so they end in `.es6.js`. IE11 Transpiler will maintain a doppelganger of the same name, ending in `.ie-compat.js`.
 
+### Usage
+
+(This package installs webpack as a dependency. If you've already installed it in your environment globally, then omit the `npx` or `yarn`.)
+
+_[`npx` or `yarn`]_ `webpack --watch --env.dir=relative/or/absolute/path/to/root/project/directory`
+
+
 A few considerations:
 
 + **Important:** Transpiled scripts don't run in the global scope, so variables considered "global" must be referenced as properties of _window_. For example:

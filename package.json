@@ -1,0 +1,22 @@
+{
+  "name": "ie11-transpiler",
+  "version": "1.0.0",
+  "description":"Watches files in a directory ending in .es6.js, and transpiles a version ending in .ie-compat.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack --watch"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/register": "^7.6.2",
+    "babel-loader": "^8.0.6",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-entry-plus": "^1.0.17"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.6.0"
+  }
+}
